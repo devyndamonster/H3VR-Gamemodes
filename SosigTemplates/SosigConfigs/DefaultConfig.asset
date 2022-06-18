@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30db0008e51c01144ab831c93ba3a111, type: 3}
+  m_Name: DefaultConfig
+  m_EditorClassIdentifier: 
+  ViewDistance: 250
+  HearingDistance: 20
+  MaxFOV: 105
+  SearchExtentsModifier: 1
+  DoesAggroOnFriendlyFire: 0
+  HasABrain: 1
+  DoesDropWeaponsOnBallistic: 1
+  CanPickupRanged: 1
+  CanPickupMelee: 1
+  CanPickupOther: 1
+  TargetCapacity: 5
+  TargetTrackingTime: 2
+  NoFreshTargetTime: 1.5
+  AssaultPointOverridesSkirmishPointWhenFurtherThan: 30
+  RunSpeed: 3.5
+  WalkSpeed: 1.4
+  SneakSpeed: 0.6
+  CrawlSpeed: 0.3
+  TurnSpeed: 8
+  MaxJointLimit: 6
+  MovementRotMagnitude: 3
+  TotalMustard: 100
+  BleedDamageMult: 0.5
+  BleedRateMultiplier: 1
+  BleedVFXIntensity: 1
+  DamMult_Projectile: 1
+  DamMult_Explosive: 1
+  DamMult_Melee: 1
+  DamMult_Piercing: 1
+  DamMult_Blunt: 1
+  DamMult_Cutting: 1
+  DamMult_Thermal: 1
+  DamMult_Chilling: 1
+  DamMult_EMP: 1
+  LinkDamageMultipliers:
+  - 10
+  - 2
+  - 1.2
+  - 0.8
+  LinkStaggerMultipliers:
+  - 4
+  - 1
+  - 1
+  - 1.5
+  StartingLinkIntegrity:
+  - {x: 100, y: 100}
+  - {x: 100, y: 100}
+  - {x: 100, y: 100}
+  - {x: 100, y: 100}
+  StartingChanceBrokenJoint:
+  - 0
+  - 0
+  - 0
+  - 0
+  ShudderThreshold: 2
+  ConfusionThreshold: 1.4
+  ConfusionMultiplier: 6
+  ConfusionTimeMax: 4
+  StunThreshold: 0.4
+  StunMultiplier: 2
+  StunTimeMax: 4
+  CanBeGrabbed: 1
+  CanBeSevered: 1
+  CanBeStabbed: 1
+  CanBeSurpressed: 1
+  SuppressionMult: 1
+  DoesJointBreakKill_Head: 1
+  DoesJointBreakKill_Upper: 0
+  DoesJointBreakKill_Lower: 0
+  DoesSeverKill_Head: 1
+  DoesSeverKill_Upper: 1
+  DoesSeverKill_Lower: 1
+  DoesExplodeKill_Head: 1
+  DoesExplodeKill_Upper: 1
+  DoesExplodeKill_Lower: 1

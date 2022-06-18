@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e2100045819bf040b374433db52a806, type: 3}
+  m_Name: Loadout 1
+  m_EditorClassIdentifier: 
+  LoadoutName: Loadout 1
+  rightHandTable: {fileID: 11400000, guid: c7de69703c98eb5498d42e0dd82bd6f0, type: 2}
+  leftHandTable: {fileID: 0}
+  quickbeltTables:
+  - {fileID: 11400000, guid: 14127c1d56f58524dbaeb2c17f83173f, type: 2}
+  - {fileID: 11400000, guid: f2b9a266ffa1c8c448a587334e86b895, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  magInOtherHand: 1
+  bespokeInOtherHand: 0

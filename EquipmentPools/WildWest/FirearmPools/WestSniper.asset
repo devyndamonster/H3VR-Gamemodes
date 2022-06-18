@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b9f9fd45da2db4585abee585ff02aa, type: 3}
+  m_Name: WestSniper
+  m_EditorClassIdentifier: 
+  poolName: Sniper Rifles
+  poolCost: 10
+  tables:
+  - {fileID: 11400000, guid: 82229d516fa24164789af2154b5c1b67, type: 2}
+  - {fileID: 11400000, guid: f736acb6787eed84ca79fe7c4287aecb, type: 2}
+  additionalItems: []
+  minMagCapacity: -1
+  maxMagCapacity: -1
+  itemsToSpawn: 1
+  items: []

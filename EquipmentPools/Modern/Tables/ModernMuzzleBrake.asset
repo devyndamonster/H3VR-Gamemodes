@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366164f4dc34c8e41bf134d9165fde17, type: 3}
+  m_Name: ModernMuzzleBrake
+  m_EditorClassIdentifier: 
+  Category: 5
+  Eras: 
+  Sets: 
+  CountriesOfOrigin: 
+  EarliestYear: -1
+  LatestYear: -1
+  Sizes: 
+  Actions: 
+  Modes: 
+  ExcludedModes: 
+  FeedOptions: 
+  MountsAvailable: 
+  RoundPowers: 
+  Features: 0a000000
+  MountTypes: 03000000
+  MeleeStyles: 
+  MeleeHandedness: 
+  ThrownTypes: 
+  ThrownDamageTypes: 
+  PowerupTypes: 
+  MinAmmoCapacity: -1
+  MaxAmmoCapacity: -1
+  OverrideMagType: 0
+  OverrideRoundType: 0
+  MagTypeOverride: 13
+  RoundTypeOverride: 21
+  WhitelistedObjectIDs: []
+  BlacklistedObjectIDs: []

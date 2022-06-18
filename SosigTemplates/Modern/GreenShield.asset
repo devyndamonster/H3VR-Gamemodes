@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd17e3e00dbfd1d41ad57eb3e1ebf295, type: 3}
+  m_Name: GreenShield
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  SosigEnemyCategory: 0
+  SosigPrefabs:
+  - SosigBody_Default
+  Configs:
+  - {fileID: 11400000, guid: b476090eb9b8a2749b2aa90446e2298f, type: 2}
+  ConfigsEasy:
+  - {fileID: 11400000, guid: b476090eb9b8a2749b2aa90446e2298f, type: 2}
+  OutfitConfigs:
+  - {fileID: 11400000, guid: ede5f83429c22e7468ee9bbc6c13c0da, type: 2}
+  WeaponOptions:
+  - SosiggunUSPMatch
+  - Sosiggun_Glock
+  WeaponOptionsSecondary:
+  - SosigMelee_Shield_Riot
+  WeaponOptionsTertiary:
+  - Sosiggrenade_Frag
+  SecondaryChance: 1
+  TertiaryChance: 1
