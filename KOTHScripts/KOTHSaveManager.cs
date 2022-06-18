@@ -80,10 +80,10 @@ namespace KOTH
 			manager.playerHealth = saveData.settingsData.playerHealth;
 			manager.wristMap.displayMode = saveData.settingsData.wristMapMode;
 
-			foreach (KOTHTimePeriodOption timePeriod in manager.timePeriodOptions)
+			foreach (TimePeriodOption timePeriod in manager.timePeriodOptions)
 			{
-				timePeriod.kothTeams[0].maxSosigs = saveData.settingsData.numGreen;
-				timePeriod.kothTeams[1].maxSosigs = saveData.settingsData.numRed;
+				timePeriod.Teams[0].maxSosigs = saveData.settingsData.numGreen;
+				timePeriod.Teams[1].maxSosigs = saveData.settingsData.numRed;
 			}
 		}
 
@@ -97,20 +97,20 @@ namespace KOTH
         }
 
 
-		private static void LoadLoadouts(KOTHTimePeriodOption timePeriod, TimePeriodData timeData)
+		private static void LoadLoadouts(TimePeriodOption timePeriod, TimePeriodData timeData)
 		{
 			for (int i = 0; i < timeData.loadoutData.Count; i++)
 			{
-				PlayerLoadout playerLoadout = timePeriod.loadouts[i];
+				PlayerLoadout playerLoadout = timePeriod.Loadouts[i];
 				LoadoutData loadoutData = timeData.loadoutData[i];
 
 				//Setup the primary item
 				LoadoutPool primary = null;
-				primary = timePeriod.firearmPools.FirstOrDefault(o => o.poolName == loadoutData.primaryPoolName);
+				primary = timePeriod.FirearmPools.FirstOrDefault(o => o.poolName == loadoutData.primaryPoolName);
 
 				if(primary == null)
                 {
-					primary = timePeriod.equipmentPools.FirstOrDefault(o => o.poolName == loadoutData.primaryPoolName);
+					primary = timePeriod.EquipmentPools.FirstOrDefault(o => o.poolName == loadoutData.primaryPoolName);
 				}
 
 				if(primary != null)
@@ -122,11 +122,11 @@ namespace KOTH
 				for(int j = 0; j < loadoutData.quickbeltPoolNames.Count; j++)
                 {
 					LoadoutPool quickbelt = null;
-					quickbelt = timePeriod.firearmPools.FirstOrDefault(o => o.poolName == loadoutData.quickbeltPoolNames[j]);
+					quickbelt = timePeriod.FirearmPools.FirstOrDefault(o => o.poolName == loadoutData.quickbeltPoolNames[j]);
 
 					if (quickbelt == null)
 					{
-						quickbelt = timePeriod.equipmentPools.FirstOrDefault(o => o.poolName == loadoutData.quickbeltPoolNames[j]);
+						quickbelt = timePeriod.EquipmentPools.FirstOrDefault(o => o.poolName == loadoutData.quickbeltPoolNames[j]);
 					}
 
 					if (quickbelt != null)
@@ -153,7 +153,7 @@ namespace KOTH
             {
 				settingsData = new KOTHSettingsData(manager);
 
-				foreach (KOTHTimePeriodOption timePeriod in manager.timePeriodOptions)
+				foreach (TimePeriodOption timePeriod in manager.timePeriodOptions)
                 {
 					timePeriodList.Add(new TimePeriodData(timePeriod));
                 }
@@ -177,8 +177,8 @@ namespace KOTH
 				playerHealth = (int)manager.playerHealth;
 				wristMapMode = manager.wristMap.displayMode;
 				respawnDelay = manager.sosigSpawnFrequency;
-				numGreen = manager.timePeriodOptions[0].kothTeams[0].maxSosigs;
-				numRed = manager.timePeriodOptions[0].kothTeams[1].maxSosigs;
+				numGreen = manager.timePeriodOptions[0].Teams[0].maxSosigs;
+				numRed = manager.timePeriodOptions[0].Teams[1].maxSosigs;
 			}
 
 		}
@@ -189,9 +189,9 @@ namespace KOTH
 
 			public TimePeriodData() { }
 
-			public TimePeriodData(KOTHTimePeriodOption timePeriod)
+			public TimePeriodData(TimePeriodOption timePeriod)
             {
-				foreach(PlayerLoadout loadout in timePeriod.loadouts)
+				foreach(PlayerLoadout loadout in timePeriod.Loadouts)
                 {
 					loadoutData.Add(new LoadoutData(loadout));
                 }

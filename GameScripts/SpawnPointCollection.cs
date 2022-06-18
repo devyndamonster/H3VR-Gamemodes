@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KOTH
+namespace Gamemodes
 {
-    public class KOTHSpawnPointCollection : MonoBehaviour
+    public class SpawnPointCollection : MonoBehaviour
     {
         public List<SpawnArea> spawnPoints;
     }

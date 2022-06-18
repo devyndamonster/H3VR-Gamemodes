@@ -1,4 +1,5 @@
 ﻿using FistVR;
+using Gamemodes;
 using Sodalite.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,8 @@ using UnityEngine;
 
 namespace KOTH
 {
-    public class KOTHSosig : MonoBehaviour
+    public class KOTHSosig : SosigTeamMember
     {
-        public Sosig sosig;
-        public KOTHTeam team;
         public KOTHHill currentHill;
 
         void OnDestroy()
@@ -34,13 +33,5 @@ namespace KOTH
             sosig.CommandAssaultPoint(hill.defendPoints.GetRandom().position);
             sosig.SetDominantGuardDirection(UnityEngine.Random.onUnitSphere);
         }
-
-        public void EquipSlothingItem(SosigWearable item, int sosigLink)
-        {
-            SosigLink link = sosig.Links[sosigLink];
-            SosigWearable wearable = Instantiate<SosigWearable>(item, link.transform.position + Vector3.up * 0.15f, link.transform.rotation, link.transform);
-            wearable.RegisterWearable(link);
-        }
-
     }
 }

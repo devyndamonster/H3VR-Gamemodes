@@ -10,18 +10,14 @@ namespace Gamemodes
 {
     public class KillBox : MonoBehaviour
     {
-
-        public LayerMask layerMask;
         public bool killPlayer;
 
         void OnTriggerEnter(Collider other)
         {
-            if (((1 << other.gameObject.layer) & layerMask) == 0) return;
-
-            Sosig sosig = other.GetComponentInParent<Sosig>();
-            if (sosig != null)
+            SosigLink link = other.GetComponentInParent<SosigLink>();
+            if (link != null && link.S != null)
             {
-                sosig.KillSosig();
+                link.S.KillSosig();
 
                 return;
             }

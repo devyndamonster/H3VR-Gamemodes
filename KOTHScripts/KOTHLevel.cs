@@ -11,11 +11,6 @@ namespace KOTH
         public List<KOTHHill> hills;
         public Transform PlayerBackupSpawn;
 
-        public void SetActiveLevel()
-        {
-            KOTHManager.instance.SetActiveLevel(this);
-        }
-
     }
 }
 

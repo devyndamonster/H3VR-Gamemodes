@@ -1,22 +1,17 @@
 ﻿using FistVR;
 using Gamemodes;
-using KOTH;
 using Sodalite;
 using Sodalite.Api;
-using Sodalite.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
 
-
-
-namespace KOTH
+namespace Gamemodes.Conquest
 {
-	public class KOTHMenuController : MonoBehaviour
+	public class ConquestMenuController : MonoBehaviour
 	{
 
 		public GameObject gamePanel;
@@ -35,21 +30,21 @@ namespace KOTH
 		public Text rateText;
 		public Text wristText;
 
-		private static KOTHMenuController instanceRef;
-		public static KOTHMenuController instance
+		private static ConquestMenuController _instance;
+		public static ConquestMenuController Instance
 		{
 			get
 			{
-				if (instanceRef == null)
+				if (_instance == null)
 				{
-					instanceRef = FindObjectOfType<KOTHMenuController>();
+					_instance = FindObjectOfType<ConquestMenuController>();
 				}
 
-				return instanceRef;
+				return _instance;
 			}
 			set
 			{
-				instanceRef = value;
+				_instance = value;
 			}
 		}
 
@@ -63,17 +58,14 @@ namespace KOTH
 
 		private WristMenuButton menuButton;
 
-
 		void Awake()
 		{
-			instance = this;
-
 			loadingContainer.SetActive(true);
 			loadingBar.gameObject.SetActive(true);
 
 			gamePanel.SetActive(false);
 			loadoutPanel.gameObject.SetActive(false);
-			KOTHManager.instance.gameObject.SetActive(false);
+			ConquestManager.instance.gameObject.SetActive(false);
 		}
 
 
@@ -121,10 +113,10 @@ namespace KOTH
 
 				//Activate stuff
 				gamePanel.SetActive(true);
-				KOTHManager.instance.gameObject.SetActive(true);
+				ConquestManager.instance.gameObject.SetActive(true);
 
 				//Initialize game stuff
-				KOTHManager.instance.DelayedInit();
+				ConquestManager.instance.DelayedInit();
 				InitGamemodeButtons();
 				InitLevelButtons();
 				InitTimePeriodButtons();
@@ -136,21 +128,21 @@ namespace KOTH
 
 
 		public void InitGamemodeButtons()
-        {
+		{
 			gamemodeButtons.ClearButtons();
 
 			gamemodeButtons.AddButton("KOTH", () => { }, true);
 
 			gamemodeButtons.buttons[0].SetSelected();
-        }
+		}
 
 		public void InitLevelButtons()
 		{
 			levelButtons.ClearButtons();
 
-			foreach(KOTHLevel level in KOTHManager.instance.levels)
-            {
-				levelButtons.AddButton(level.name, () => { KOTHManager.instance.SetActiveLevel(level); }, true);
+			foreach (ConquestLevel level in ConquestManager.instance.levels)
+			{
+				levelButtons.AddButton(level.name, () => { ConquestManager.instance.SetActiveLevel(level); }, true);
 			}
 
 			levelButtons.buttons[0].SetSelected();
@@ -160,16 +152,16 @@ namespace KOTH
 		{
 			timePeriodButtons.ClearButtons();
 
-			foreach (TimePeriodOption timePeriod in KOTHManager.instance.timePeriodOptions)
+			foreach (TimePeriodOption timePeriod in ConquestManager.instance.timePeriodOptions)
 			{
 				timePeriodButtons.AddButton(
-					timePeriod.TimePeriodName, 
+					timePeriod.TimePeriodName,
 					() =>
 					{
 						timePeriod.InitializeLoadouts();
-						KOTHManager.instance.SetActiveTimePeriod(timePeriod);
+						ConquestManager.instance.SetActiveTimePeriod(timePeriod);
 						InitLoadoutButtons();
-					}, 
+					},
 					true);
 			}
 
@@ -180,9 +172,9 @@ namespace KOTH
 		{
 			loadoutButtons.ClearButtons();
 
-			foreach (PlayerLoadout loadout in KOTHManager.instance.currentTimePeriod.Loadouts)
+			foreach (PlayerLoadout loadout in ConquestManager.instance.currentTimePeriod.Loadouts)
 			{
-				loadoutButtons.AddButton(loadout.LoadoutName, () => { KOTHManager.instance.SetPlayerLoadout(loadout); }, true);
+				loadoutButtons.AddButton(loadout.LoadoutName, () => { ConquestManager.instance.SetPlayerLoadout(loadout); }, true);
 			}
 
 			loadoutButtons.buttons[0].SetSelected();
@@ -190,16 +182,16 @@ namespace KOTH
 
 
 		private void InitSettingsText()
-        {
-			for(int i = 0; i < teamText.Count; i++)
-            {
-				teamText[i].text = KOTHManager.instance.teams[i].maxSosigs.ToString();
-            }
+		{
+			for (int i = 0; i < teamText.Count; i++)
+			{
+				teamText[i].text = ConquestManager.instance.teams[i].maxSosigs.ToString();
+			}
 
-			healthText.text = KOTHManager.instance.playerHealth.ToString();
-			rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString();
-			wristText.text = KOTHManager.instance.wristMap.displayMode.ToString();
-        }
+			healthText.text = ConquestManager.instance.playerHealth.ToString();
+			rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString();
+			wristText.text = ConquestManager.instance.wristMap.displayMode.ToString();
+		}
 
 
 		private void UpdateLoadProgress()
@@ -247,18 +239,18 @@ namespace KOTH
 
 
 		public void SetEditLoadout()
-        {
+		{
 			gamePanel.SetActive(false);
 			loadoutPanel.gameObject.SetActive(true);
 
 			loadoutPanel.InitLoadoutEditor(
-				KOTHManager.instance.currentPlayerLoadout, 
-				KOTHManager.instance.currentTimePeriod.FirearmPools,
-				KOTHManager.instance.currentTimePeriod.EquipmentPools);
-        }
+				ConquestManager.instance.currentPlayerLoadout,
+				ConquestManager.instance.currentTimePeriod.FirearmPools,
+				ConquestManager.instance.currentTimePeriod.EquipmentPools);
+		}
 
 		public void SetGameMenu()
-        {
+		{
 			gamePanel.SetActive(true);
 			loadoutPanel.gameObject.SetActive(false);
 		}
@@ -297,11 +289,11 @@ namespace KOTH
 			GM.CurrentPlayerBody.HealthBar.gameObject.SetActive(true);
 			GM.CurrentSceneSettings.MaxPointingDistance = basePointDistance;
 
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.MovePlayerSpawnpoint();
-				KOTHManager.instance.OnPlayerFadeComplete();
-				GM.CurrentMovementManager.TeleportToPoint(KOTHManager.instance.playerSpawn.position, true, KOTHManager.instance.playerSpawn.forward);
+				ConquestManager.instance.MovePlayerSpawnpoint();
+				ConquestManager.instance.OnPlayerFadeComplete();
+				GM.CurrentMovementManager.TeleportToPoint(ConquestManager.instance.playerSpawn.position, true, ConquestManager.instance.playerSpawn.forward);
 			}
 
 			SteamVR_Fade.Start(Color.clear, 0.5f, false);
@@ -311,81 +303,81 @@ namespace KOTH
 
 		public void IncreasePlayerHealth()
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.playerHealth = Math.Max(100, KOTHManager.instance.playerHealth + 100);
-				GM.CurrentPlayerBody.SetHealthThreshold(KOTHManager.instance.playerHealth);
+				ConquestManager.instance.playerHealth = Math.Max(100, ConquestManager.instance.playerHealth + 100);
+				GM.CurrentPlayerBody.SetHealthThreshold(ConquestManager.instance.playerHealth);
 
-				healthText.text = ((int)KOTHManager.instance.playerHealth).ToString();
+				healthText.text = ((int)ConquestManager.instance.playerHealth).ToString();
 			}
 		}
 
 		public void DecreasePlayerHealth()
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.playerHealth = Math.Max(100, KOTHManager.instance.playerHealth - 100);
+				ConquestManager.instance.playerHealth = Math.Max(100, ConquestManager.instance.playerHealth - 100);
 
-				GM.CurrentPlayerBody.SetHealthThreshold(KOTHManager.instance.playerHealth);
-				healthText.text = ((int)KOTHManager.instance.playerHealth).ToString();
+				GM.CurrentPlayerBody.SetHealthThreshold(ConquestManager.instance.playerHealth);
+				healthText.text = ((int)ConquestManager.instance.playerHealth).ToString();
 			}
 		}
 
 		public void IncreaseSosigCount(int team)
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.teams[team].maxSosigs = Math.Max(1, KOTHManager.instance.teams[team].maxSosigs + 1);
-				teamText[team].text = KOTHManager.instance.teams[team].maxSosigs.ToString();
+				ConquestManager.instance.teams[team].maxSosigs = Math.Max(1, ConquestManager.instance.teams[team].maxSosigs + 1);
+				teamText[team].text = ConquestManager.instance.teams[team].maxSosigs.ToString();
 
 				//Update all time periods
-				foreach (TimePeriodOption timePeriod in KOTHManager.instance.timePeriodOptions)
+				foreach (TimePeriodOption timePeriod in ConquestManager.instance.timePeriodOptions)
 				{
-					timePeriod.Teams[team].maxSosigs = KOTHManager.instance.teams[team].maxSosigs;
+					timePeriod.Teams[team].maxSosigs = ConquestManager.instance.teams[team].maxSosigs;
 				}
 			}
 		}
 
 		public void DecreaseSosigCount(int team)
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.teams[team].maxSosigs = Math.Max(1, KOTHManager.instance.teams[team].maxSosigs - 1);
-				teamText[team].text = KOTHManager.instance.teams[team].maxSosigs.ToString();
+				ConquestManager.instance.teams[team].maxSosigs = Math.Max(1, ConquestManager.instance.teams[team].maxSosigs - 1);
+				teamText[team].text = ConquestManager.instance.teams[team].maxSosigs.ToString();
 
 				//Update all time periods
-				foreach (TimePeriodOption timePeriod in KOTHManager.instance.timePeriodOptions)
+				foreach (TimePeriodOption timePeriod in ConquestManager.instance.timePeriodOptions)
 				{
-					timePeriod.Teams[team].maxSosigs = KOTHManager.instance.teams[team].maxSosigs;
+					timePeriod.Teams[team].maxSosigs = ConquestManager.instance.teams[team].maxSosigs;
 				}
 			}
 		}
 
 		public void IncreaseSosigDelay()
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.sosigSpawnFrequency = Math.Max(0.1f, KOTHManager.instance.sosigSpawnFrequency + 0.1f);
+				ConquestManager.instance.sosigSpawnFrequency = Math.Max(0.1f, ConquestManager.instance.sosigSpawnFrequency + 0.1f);
 
-				rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString("0.0");
+				rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString("0.0");
 			}
 		}
 
 		public void DecreaseSosigDelay()
 		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
+			if (ConquestManager.instance.gameObject.activeInHierarchy)
 			{
-				KOTHManager.instance.sosigSpawnFrequency = Math.Max(0.1f, KOTHManager.instance.sosigSpawnFrequency - 0.1f);
+				ConquestManager.instance.sosigSpawnFrequency = Math.Max(0.1f, ConquestManager.instance.sosigSpawnFrequency - 0.1f);
 
-				rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString("0.0");
+				rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString("0.0");
 			}
 		}
 
 		public void IncrementWristMode(bool decrease)
-        {
-			KOTHManager.instance.wristMap.IncrementMapState(decrease);
+		{
+			ConquestManager.instance.wristMap.IncrementMapState(decrease);
 
-			wristText.text = KOTHManager.instance.wristMap.displayMode.ToString();
+			wristText.text = ConquestManager.instance.wristMap.displayMode.ToString();
 		}
 
 
@@ -422,7 +414,6 @@ namespace KOTH
 				Destroy(bolt.gameObject);
 			}
 		}
-
 	}
 }
 

@@ -12,9 +12,9 @@ namespace KOTH
     public class KOTHManager : MonoBehaviour
     {
         public Transform playerSpawn;
-        public List<KOTHTeam> teams;
+        public List<Team> teams;
         public List<KOTHLevel> levels;
-        public List<KOTHTimePeriodOption> timePeriodOptions;
+        public List<TimePeriodOption> timePeriodOptions;
         public WristMapController wristMap;
 
         public float sosigSpawnFrequency = 10;
@@ -44,7 +44,7 @@ namespace KOTH
         public KOTHLevel currentLevel;
 
         [HideInInspector]
-        public KOTHTimePeriodOption currentTimePeriod;
+        public TimePeriodOption currentTimePeriod;
 
         [HideInInspector]
         public PlayerLoadout currentPlayerLoadout;
@@ -95,9 +95,9 @@ namespace KOTH
 
             //First, setup all the level stuff
             SetActiveLevel(levels[0]);
-            
+
             //Afterwards, set the time period
-            timePeriodOptions[0].SetActiveTimePeriod();
+            SetActiveTimePeriod(timePeriodOptions[0]);
 
             GM.CurrentSceneSettings.SosigKillEvent += OnSosigKill;
             GM.CurrentSceneSettings.PlayerDeathEvent += OnPlayerDeath;
@@ -105,11 +105,21 @@ namespace KOTH
         }
 
 
+        public void SetActiveTimePeriod(TimePeriodOption timePeriod)
+        {
+            ResetKOTH();
+            currentTimePeriod = timePeriod;
+            teams.Clear();
+            teams.AddRange(timePeriod.Teams);
+            SetPlayerLoadout(timePeriod.Loadouts[0]);
+        }
+
+
         public void ResetKOTH()
         {
             Debug.Log("Resetting KOTH");
 
-            foreach (KOTHTeam team in teams)
+            foreach (Team team in teams)
             {
                 team.KillAllSosigs();
             }
@@ -136,7 +146,7 @@ namespace KOTH
             nextHill.ResetHill();
             nextHill.ResetDefenses();
 
-            foreach(KOTHTeam team in teams)
+            foreach(Team team in teams)
             {
                 foreach(KOTHSosig sosig in team.sosigs)
                 {
@@ -303,7 +313,7 @@ namespace KOTH
 
                 if (area.CanSosigSpawn(team)) return area;
 
-                foreach(KOTHSpawnPointCollection collection in currentLevel.hills[currentHillIndex].teamSpawnPoints)
+                foreach(SpawnPointCollection collection in currentLevel.hills[currentHillIndex].teamSpawnPoints)
                 {
                     foreach(SpawnArea newArea in collection.spawnPoints)
                     {

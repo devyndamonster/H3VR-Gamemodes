@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KOTH
+namespace Gamemodes
 {
-    public class KOTHTeam : MonoBehaviour
+    public class Team : MonoBehaviour
     {
-        public List<KOTHSosig> sosigs;
+        [HideInInspector]
+        public List<SosigTeamMember> sosigs;
 
         public List<AtlasSosigEnemyTemplate> sosigTemplates;
 
@@ -31,7 +32,7 @@ namespace KOTH
 
         public void KillAllSosigs()
         {
-            foreach(KOTHSosig sosig in sosigs)
+            foreach(SosigTeamMember sosig in sosigs)
             {
                 sosig.sosig.KillSosig();
             }

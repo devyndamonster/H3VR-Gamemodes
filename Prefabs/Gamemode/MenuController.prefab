@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 223436844173293004}
   - component: {fileID: 114883822232748182}
   - component: {fileID: 114718620679521286}
-  - component: {fileID: 114913901223800324}
+  - component: {fileID: 114080391297315098}
   m_Layer: 0
   m_Name: Loadouts
   m_TagString: Untagged
@@ -1306,7 +1306,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1001045029140370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 97.79, y: 277.66, z: 167.35}
+  m_LocalPosition: {x: 0, y: 23.28, z: -3.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4452472044310496}
@@ -1522,12 +1522,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114134334119813436}
+  m_usesButton: 0
   Image: {fileID: 114532922923867720}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114035944725815572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1611,12 +1615,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114850266329493234}
+  m_usesButton: 0
   Image: {fileID: 114222333949045188}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114067802180741092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1629,7 +1637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePanel: {fileID: 1582446466086292}
-  loadoutPanel: {fileID: 114913901223800324}
+  loadoutPanel: {fileID: 114080391297315098}
   loadingContainer: {fileID: 1291032881623240}
   loadingBar: {fileID: 114901149041521712}
   menuPoint: {fileID: 4452472044310496}
@@ -1711,6 +1719,24 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 20
+--- !u!114 &114080391297315098
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447685122802950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32709ab26ea2c0e40945c180030b31e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxPoints: 20
+  pointsText: {fileID: 114068902763377676}
+  firearmsList: {fileID: 114654676608776172}
+  equipmentList: {fileID: 114196577276243060}
+  primaryList: {fileID: 114818507355660012}
+  quickbeltList: {fileID: 114718208694479572}
+  selectedLoadoutSlot: -1
 --- !u!114 &114092976030743024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2043,12 +2069,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114303570530222092}
+  m_usesButton: 0
   Image: {fileID: 114838036082197906}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114195974441167832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2161,12 +2191,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114575932551858538}
+  m_usesButton: 0
   Image: {fileID: 114244161455979874}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114220969619597402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2660,12 +2694,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114769089214836332}
+  m_usesButton: 0
   Image: {fileID: 114679446606984146}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114303570530222092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2768,12 +2806,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114694822258388296}
+  m_usesButton: 0
   Image: {fileID: 114560811575095932}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114330053087390246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3004,12 +3046,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114801555924284410}
+  m_usesButton: 0
   Image: {fileID: 114249963397193364}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114420181584821542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3399,12 +3445,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114349865260166114}
+  m_usesButton: 0
   Image: {fileID: 114893261002779348}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114654676608776172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3748,12 +3798,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114205826057702090}
+  m_usesButton: 0
   Image: {fileID: 114934748596049192}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114727063362502006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3864,12 +3918,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114226801058027360}
+  m_usesButton: 0
   Image: {fileID: 114421600233665276}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114754431497947576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3914,12 +3972,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114154070508314120}
+  m_usesButton: 0
   Image: {fileID: 114220969619597402}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114765268644102354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4117,12 +4179,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114330053087390246}
+  m_usesButton: 0
   Image: {fileID: 114509959618754592}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!114 &114793753140128232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4634,24 +4700,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114913901223800324
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1447685122802950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f70ca3174c64684fa0b3eb36796606a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxPoints: 20
-  pointsText: {fileID: 114068902763377676}
-  firearmsList: {fileID: 114654676608776172}
-  equipmentList: {fileID: 114196577276243060}
-  primaryList: {fileID: 114818507355660012}
-  quickbeltList: {fileID: 114718208694479572}
-  selectedLoadoutSlot: -1
 --- !u!114 &114922348413538708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4828,12 +4876,16 @@ MonoBehaviour:
   ColorUnselected: {r: 1, g: 1, b: 1, a: 1}
   ColorSelected: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
   Button: {fileID: 114853546798948730}
+  m_usesButton: 0
   Image: {fileID: 114568679033218002}
+  m_usesImage: 0
   Text: {fileID: 0}
+  m_usesText: 0
   Rend: {fileID: 0}
   m_usesRend: 0
   ColorName: _Color
   m_scaleTick: 0
+  nextScaleTick: 0
 --- !u!222 &222012821898588356
 CanvasRenderer:
   m_ObjectHideFlags: 1

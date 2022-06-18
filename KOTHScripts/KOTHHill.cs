@@ -13,7 +13,7 @@ namespace KOTH
     public class KOTHHill : MonoBehaviour
     {
 
-        public List<KOTHSpawnPointCollection> teamSpawnPoints;
+        public List<SpawnPointCollection> teamSpawnPoints;
         public List<Transform> attackPoints;
         public List<Transform> defendPoints;
         public List<MeshRenderer> hillRendererList;
@@ -325,7 +325,7 @@ namespace KOTH
 
         private void SetAllSpawnsToTeam(int team)
         {
-            foreach (KOTHSpawnPointCollection teamSpawns in teamSpawnPoints)
+            foreach (SpawnPointCollection teamSpawns in teamSpawnPoints)
             {
                 foreach (SpawnArea area in teamSpawns.spawnPoints)
                 {
@@ -436,11 +436,15 @@ namespace KOTH
             {
                 Gizmos.color = KOTHManager.instance.teams[team].teamColor;
                 
-                foreach (SpawnArea point in teamSpawnPoints[team].spawnPoints)
+                if(teamSpawnPoints[team] != null)
                 {
-                    Gizmos.DrawSphere(point.transform.position, 0.25f);
-                    Gizmos.DrawLine(point.transform.position, transform.position);
+                    foreach (SpawnArea point in teamSpawnPoints[team].spawnPoints)
+                    {
+                        Gizmos.DrawSphere(point.transform.position, 0.25f);
+                        Gizmos.DrawLine(point.transform.position, transform.position);
+                    }
                 }
+                
             }
 
             Gizmos.color = Color.magenta;

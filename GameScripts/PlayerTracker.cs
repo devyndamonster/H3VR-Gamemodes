@@ -49,15 +49,7 @@ namespace Gamemodes
 				UnityEngine.Object.Destroy(leftHeld.gameObject);
 			}
 
-			foreach (FVRQuickBeltSlot slot in GM.CurrentPlayerBody.QuickbeltSlots)
-			{
-				if (slot.CurObject != null)
-				{
-					FVRPhysicalObject item = slot.CurObject;
-					item.SetQuickBeltSlot(null);
-					UnityEngine.Object.Destroy(item.gameObject);
-				}
-			}
+			GM.CurrentPlayerBody.WipeQuickbeltContents();
 		}
 
 
@@ -198,8 +190,8 @@ namespace Gamemodes
 			{
 				if (table == null) continue;
 
-				for(int i = 0; i < table.itemsToSpawn; i++)
-                {
+				for (int i = 0; i < table.itemsToSpawn; i++)
+				{
 					FVRObject selected = table.GetItem();
 
 					GivePlayerItemQuickbelt(selected.ItemID);
@@ -264,11 +256,11 @@ namespace Gamemodes
 				Debug.Log("hey we have two components!");
 			}
 
-			foreach (FVRQuickBeltSlot slot in GM.CurrentPlayerBody.QuickbeltSlots.OrderBy(o => o.SizeLimit))
+			foreach (FVRQuickBeltSlot slot in GM.CurrentPlayerBody.QBSlots_Internal.OrderBy(o => o.SizeLimit))
 			{
 				if (slot.CurObject == null && slot.Type == item.QBSlotType && slot.SizeLimit >= item.Size)
 				{
-					item.ForceObjectIntoInventorySlot(slot);
+					item.SetQuickBeltSlot(slot);
 					break;
 				}
 			}
