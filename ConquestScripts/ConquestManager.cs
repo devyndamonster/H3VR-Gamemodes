@@ -92,6 +92,40 @@ namespace Gamemodes.Conquest
             GM.CurrentPlayerBody.SetHealthThreshold(playerHealth);
         }
 
+        public void SetPlayerHealth(int value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                playerHealth = value;
+                GM.CurrentPlayerBody.SetHealthThreshold(value);
+            }
+        }
+
+        public void SetSosigTeamSize(int team, int value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                teams[team].maxSosigs = value;
+
+                foreach (TimePeriodOption timePeriod in timePeriodOptions)
+                {
+                    timePeriod.Teams[team].maxSosigs = value;
+                }
+            }
+        }
+
+        public void SetSosigDelay(float value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                sosigSpawnFrequency = value;
+            }
+        }
+
+        public void SetWristMode(int value)
+        {
+            wristMap.displayMode = (WristMapDisplayMode)value;
+        }
 
         public void SetActiveTimePeriod(TimePeriodOption timePeriod)
         {

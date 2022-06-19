@@ -24,11 +24,8 @@ namespace Gamemodes.Conquest
 		public ButtonList levelButtons;
 		public ButtonList timePeriodButtons;
 		public ButtonList loadoutButtons;
+		public ValueButtonList settingsButtons;
 
-		public List<Text> teamText;
-		public Text healthText;
-		public Text rateText;
-		public Text wristText;
 
 		private static ConquestMenuController _instance;
 		public static ConquestMenuController Instance
@@ -121,11 +118,9 @@ namespace Gamemodes.Conquest
 				InitLevelButtons();
 				InitTimePeriodButtons();
 				InitLoadoutButtons();
-
-				InitSettingsText();
+				InitSettings();
 			}
 		}
-
 
 		public void InitGamemodeButtons()
 		{
@@ -181,16 +176,49 @@ namespace Gamemodes.Conquest
 		}
 
 
-		private void InitSettingsText()
+		private void InitSettings()
 		{
-			for (int i = 0; i < teamText.Count; i++)
-			{
-				teamText[i].text = ConquestManager.instance.teams[i].maxSosigs.ToString();
-			}
+			Team greenTeam = ConquestManager.instance.teams[0];
+			settingsButtons.AddButton(
+				"Green Team Size",
+				0,
+				999,
+				greenTeam.maxSosigs,
+				1,
+				(int value) => { ConquestManager.instance.SetSosigTeamSize(0, value); });
 
-			healthText.text = ConquestManager.instance.playerHealth.ToString();
-			rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString();
-			wristText.text = ConquestManager.instance.wristMap.displayMode.ToString();
+			Team redTeam = ConquestManager.instance.teams[1];
+			settingsButtons.AddButton(
+				"Red Team Size",
+				0,
+				999,
+				redTeam.maxSosigs,
+				1,
+				(int value) => { ConquestManager.instance.SetSosigTeamSize(1, value); });
+
+			settingsButtons.AddButton(
+				"Respawn Delay",
+				1f,
+				999f,
+				ConquestManager.instance.sosigSpawnFrequency,
+				1f,
+				(float value) => { ConquestManager.instance.SetSosigDelay(value); });
+
+			settingsButtons.AddButton(
+				"Player Health",
+				1000,
+				100000,
+				(int)ConquestManager.instance.playerHealth,
+				1000,
+				(int value) => { ConquestManager.instance.SetPlayerHealth(value); });
+
+			settingsButtons.AddButton(
+				"Wrist Map Mode",
+				0,
+				2,
+				(int)ConquestManager.instance.wristMap.displayMode,
+				1,
+				(int value) => { ConquestManager.instance.SetWristMode(value); });
 		}
 
 
@@ -298,88 +326,6 @@ namespace Gamemodes.Conquest
 
 			SteamVR_Fade.Start(Color.clear, 0.5f, false);
 		}
-
-
-
-		public void IncreasePlayerHealth()
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.playerHealth = Math.Max(100, ConquestManager.instance.playerHealth + 100);
-				GM.CurrentPlayerBody.SetHealthThreshold(ConquestManager.instance.playerHealth);
-
-				healthText.text = ((int)ConquestManager.instance.playerHealth).ToString();
-			}
-		}
-
-		public void DecreasePlayerHealth()
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.playerHealth = Math.Max(100, ConquestManager.instance.playerHealth - 100);
-
-				GM.CurrentPlayerBody.SetHealthThreshold(ConquestManager.instance.playerHealth);
-				healthText.text = ((int)ConquestManager.instance.playerHealth).ToString();
-			}
-		}
-
-		public void IncreaseSosigCount(int team)
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.teams[team].maxSosigs = Math.Max(1, ConquestManager.instance.teams[team].maxSosigs + 1);
-				teamText[team].text = ConquestManager.instance.teams[team].maxSosigs.ToString();
-
-				//Update all time periods
-				foreach (TimePeriodOption timePeriod in ConquestManager.instance.timePeriodOptions)
-				{
-					timePeriod.Teams[team].maxSosigs = ConquestManager.instance.teams[team].maxSosigs;
-				}
-			}
-		}
-
-		public void DecreaseSosigCount(int team)
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.teams[team].maxSosigs = Math.Max(1, ConquestManager.instance.teams[team].maxSosigs - 1);
-				teamText[team].text = ConquestManager.instance.teams[team].maxSosigs.ToString();
-
-				//Update all time periods
-				foreach (TimePeriodOption timePeriod in ConquestManager.instance.timePeriodOptions)
-				{
-					timePeriod.Teams[team].maxSosigs = ConquestManager.instance.teams[team].maxSosigs;
-				}
-			}
-		}
-
-		public void IncreaseSosigDelay()
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.sosigSpawnFrequency = Math.Max(0.1f, ConquestManager.instance.sosigSpawnFrequency + 0.1f);
-
-				rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString("0.0");
-			}
-		}
-
-		public void DecreaseSosigDelay()
-		{
-			if (ConquestManager.instance.gameObject.activeInHierarchy)
-			{
-				ConquestManager.instance.sosigSpawnFrequency = Math.Max(0.1f, ConquestManager.instance.sosigSpawnFrequency - 0.1f);
-
-				rateText.text = ConquestManager.instance.sosigSpawnFrequency.ToString("0.0");
-			}
-		}
-
-		public void IncrementWristMode(bool decrease)
-		{
-			ConquestManager.instance.wristMap.IncrementMapState(decrease);
-
-			wristText.text = ConquestManager.instance.wristMap.displayMode.ToString();
-		}
-
 
 		public void CleanupItems()
 		{

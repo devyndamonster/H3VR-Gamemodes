@@ -1,13 +1,8 @@
 ﻿using FistVR;
 using Gamemodes;
-using KOTH;
 using Sodalite;
 using Sodalite.Api;
-using Sodalite.Utilities;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
@@ -16,7 +11,7 @@ using Valve.VR;
 
 namespace KOTH
 {
-	public class KOTHMenuController : MonoBehaviour
+    public class KOTHMenuController : MonoBehaviour
 	{
 
 		public GameObject gamePanel;
@@ -29,11 +24,8 @@ namespace KOTH
 		public ButtonList levelButtons;
 		public ButtonList timePeriodButtons;
 		public ButtonList loadoutButtons;
+		public ValueButtonList settingsButtons;
 
-		public List<Text> teamText;
-		public Text healthText;
-		public Text rateText;
-		public Text wristText;
 
 		private static KOTHMenuController instanceRef;
 		public static KOTHMenuController instance
@@ -130,7 +122,7 @@ namespace KOTH
 				InitTimePeriodButtons();
 				InitLoadoutButtons();
 
-				InitSettingsText();
+				InitSettings();
 			}
 		}
 
@@ -189,16 +181,49 @@ namespace KOTH
 		}
 
 
-		private void InitSettingsText()
+		private void InitSettings()
         {
-			for(int i = 0; i < teamText.Count; i++)
-            {
-				teamText[i].text = KOTHManager.instance.teams[i].maxSosigs.ToString();
-            }
+			Team greenTeam = KOTHManager.instance.teams[0];
+			settingsButtons.AddButton(
+				"Green Team Size",
+				0,
+				999,
+				greenTeam.maxSosigs,
+				1,
+				(int value) => { KOTHManager.instance.SetSosigTeamSize(0, value); });
 
-			healthText.text = KOTHManager.instance.playerHealth.ToString();
-			rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString();
-			wristText.text = KOTHManager.instance.wristMap.displayMode.ToString();
+			Team redTeam = KOTHManager.instance.teams[1];
+			settingsButtons.AddButton(
+				"Red Team Size",
+				0,
+				999,
+				redTeam.maxSosigs,
+				1,
+				(int value) => { KOTHManager.instance.SetSosigTeamSize(1, value); });
+
+			settingsButtons.AddButton(
+				"Respawn Delay",
+				1f,
+				999f,
+				KOTHManager.instance.sosigSpawnFrequency,
+				1f,
+				(float value) => { KOTHManager.instance.SetSosigDelay(value); });
+
+			settingsButtons.AddButton(
+				"Player Health",
+				1000,
+				100000,
+				(int)KOTHManager.instance.playerHealth,
+				1000,
+				(int value) => { KOTHManager.instance.SetPlayerHealth(value); });
+
+			settingsButtons.AddButton(
+				"Wrist Map Mode",
+				0,
+				2,
+				(int)KOTHManager.instance.wristMap.displayMode,
+				1,
+				(int value) => { KOTHManager.instance.SetWristMode(value); });
         }
 
 
@@ -306,88 +331,6 @@ namespace KOTH
 
 			SteamVR_Fade.Start(Color.clear, 0.5f, false);
 		}
-
-
-
-		public void IncreasePlayerHealth()
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.playerHealth = Math.Max(100, KOTHManager.instance.playerHealth + 100);
-				GM.CurrentPlayerBody.SetHealthThreshold(KOTHManager.instance.playerHealth);
-
-				healthText.text = ((int)KOTHManager.instance.playerHealth).ToString();
-			}
-		}
-
-		public void DecreasePlayerHealth()
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.playerHealth = Math.Max(100, KOTHManager.instance.playerHealth - 100);
-
-				GM.CurrentPlayerBody.SetHealthThreshold(KOTHManager.instance.playerHealth);
-				healthText.text = ((int)KOTHManager.instance.playerHealth).ToString();
-			}
-		}
-
-		public void IncreaseSosigCount(int team)
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.teams[team].maxSosigs = Math.Max(1, KOTHManager.instance.teams[team].maxSosigs + 1);
-				teamText[team].text = KOTHManager.instance.teams[team].maxSosigs.ToString();
-
-				//Update all time periods
-				foreach (TimePeriodOption timePeriod in KOTHManager.instance.timePeriodOptions)
-				{
-					timePeriod.Teams[team].maxSosigs = KOTHManager.instance.teams[team].maxSosigs;
-				}
-			}
-		}
-
-		public void DecreaseSosigCount(int team)
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.teams[team].maxSosigs = Math.Max(1, KOTHManager.instance.teams[team].maxSosigs - 1);
-				teamText[team].text = KOTHManager.instance.teams[team].maxSosigs.ToString();
-
-				//Update all time periods
-				foreach (TimePeriodOption timePeriod in KOTHManager.instance.timePeriodOptions)
-				{
-					timePeriod.Teams[team].maxSosigs = KOTHManager.instance.teams[team].maxSosigs;
-				}
-			}
-		}
-
-		public void IncreaseSosigDelay()
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.sosigSpawnFrequency = Math.Max(0.1f, KOTHManager.instance.sosigSpawnFrequency + 0.1f);
-
-				rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString("0.0");
-			}
-		}
-
-		public void DecreaseSosigDelay()
-		{
-			if (KOTHManager.instance.gameObject.activeInHierarchy)
-			{
-				KOTHManager.instance.sosigSpawnFrequency = Math.Max(0.1f, KOTHManager.instance.sosigSpawnFrequency - 0.1f);
-
-				rateText.text = KOTHManager.instance.sosigSpawnFrequency.ToString("0.0");
-			}
-		}
-
-		public void IncrementWristMode(bool decrease)
-        {
-			KOTHManager.instance.wristMap.IncrementMapState(decrease);
-
-			wristText.text = KOTHManager.instance.wristMap.displayMode.ToString();
-		}
-
 
 		public void CleanupItems()
 		{

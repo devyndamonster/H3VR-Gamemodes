@@ -105,6 +105,41 @@ namespace KOTH
         }
 
 
+        public void SetPlayerHealth(int value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                playerHealth = value;
+                GM.CurrentPlayerBody.SetHealthThreshold(value);
+            }
+        }
+
+        public void SetSosigTeamSize(int team, int value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                teams[team].maxSosigs = value;
+
+                foreach (TimePeriodOption timePeriod in timePeriodOptions)
+                {
+                    timePeriod.Teams[team].maxSosigs = value;
+                }
+            }
+        }
+
+        public void SetSosigDelay(float value)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                sosigSpawnFrequency = value;
+            }
+        }
+
+        public void SetWristMode(int value)
+        {
+            wristMap.displayMode = (WristMapDisplayMode)value;
+        }
+
         public void SetActiveTimePeriod(TimePeriodOption timePeriod)
         {
             ResetKOTH();
@@ -249,26 +284,6 @@ namespace KOTH
         {
             KOTHMenuController.instance.CleanupItems();
 
-            //If the player has to wait to respawn, set them as a spectator
-            /*
-            if (currentLevel.hills[currentHillIndex].currentTeam == 0)
-            {
-                MoveSpawnToSpectate();
-                gameController.SetPlayerSpectator(currentLevel.spectatePoint);
-                PlayerTracker.currentPlayerState = PlayerState.waitingToRespawn;
-            }
-            
-            //If the player is to respawn, get them ready to spawn
-            else
-            {
-                PlayerTracker.ClearPlayerItems();
-                PlayerTracker.EquipPlayer(currentPlayerLoadout);
-                PlayerTracker.currentPlayerState = PlayerState.playing;
-            }
-            */
-
-
-            //The player will always respawn
             PlayerTracker.ClearPlayerItems();
             PlayerTracker.EquipPlayer(currentPlayerLoadout);
             PlayerTracker.currentPlayerState = PlayerState.playing;
