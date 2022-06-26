@@ -22,8 +22,8 @@ namespace Gamemodes
 			buttonComp.MinValue = minValue;
 			buttonComp.MaxValue = maxValue;
 			buttonComp.Increment = increment;
-			buttonComp.Value = startingValue;
 			buttonComp.OnValueChanged = OnValueChanged;
+			buttonComp.Value = startingValue;
 
 			buttons.Add(buttonComp);
 
@@ -38,8 +38,8 @@ namespace Gamemodes
 			buttonComp.MinValue = minValue;
 			buttonComp.MaxValue = maxValue;
 			buttonComp.Increment = increment;
-			buttonComp.Value = startingValue;
 			buttonComp.OnValueChanged = OnValueChanged;
+			buttonComp.Value = startingValue;
 
 			buttons.Add(buttonComp);
 

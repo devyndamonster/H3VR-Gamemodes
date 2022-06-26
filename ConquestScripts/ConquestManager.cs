@@ -3,25 +3,43 @@ using Sodalite.Api;
 using Sodalite.Utilities;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Gamemodes.Conquest
 {
     public class ConquestManager : MonoBehaviour
     {
-
         public Transform playerSpawn;
-        public List<Team> teams;
         public List<ConquestLevel> levels;
         public List<TimePeriodOption> timePeriodOptions;
+        public List<TicketDisplay> ticketDisplays;
         public WristMapController wristMap;
-
+        public string levelName = "GenericConquest";
         public float sosigSpawnFrequency = 10;
+        public int additionalEnemySosigSpawns = 1;
+        public float ticketUpdateFrequency = 10;
+        public int ticketPointControlCost = 10;
+        public int ticketKillCost = 5;
         public float captureUpdateFrequency = 1;
         public float playerHealth = 1000f;
-        public string levelName = "GenericConquest";
+        public int startingTickets = 1000;
 
-
+        [HideInInspector]
+        public List<Team> teams;
+        [HideInInspector]
+        public ConquestLevel currentLevel;
+        [HideInInspector]
+        public TimePeriodOption currentTimePeriod;
+        [HideInInspector]
+        public PlayerLoadout currentPlayerLoadout;
+        [HideInInspector]
+        public float timeTillSpawn = 0;
+        [HideInInspector]
+        public float timeTillTicketUpdate = 0;
+        [HideInInspector]
+        public bool hasInit = false;
+        
         private static ConquestManager instanceRef;
         public static ConquestManager instance
         {
@@ -40,39 +58,57 @@ namespace Gamemodes.Conquest
             }
         }
 
-        [HideInInspector]
-        public ConquestLevel currentLevel;
-
-        [HideInInspector]
-        public TimePeriodOption currentTimePeriod;
-
-        [HideInInspector]
-        public PlayerLoadout currentPlayerLoadout;
-
-        [HideInInspector]
-        public float timeTillSpawn = 0;
-
-        [HideInInspector]
-        public bool hasInit = false;
-
-
         void Update()
         {
             if (!hasInit) return;
 
+            SosigSpawnUpdate();
+            TicketUpdate();
+        }
+
+        private void SosigSpawnUpdate()
+        {
             if (timeTillSpawn <= 0)
             {
-                for (int i = 0; i < teams.Count; i++)
+                for (int team = 0; team < teams.Count; team++)
                 {
-                    SpawnSosig(i);
+                    for(int sosigIndex = 0; sosigIndex < 1 || (team != 0 && sosigIndex < 1 + additionalEnemySosigSpawns); sosigIndex++)
+                    {
+                        if (teams[team].HasRoomForMoreMembers())
+                        {
+                            SpawnSosig(team);
+                        }
+                    }
                 }
-
                 timeTillSpawn = sosigSpawnFrequency;
             }
 
             timeTillSpawn -= Time.deltaTime;
         }
 
+        private void TicketUpdate()
+        {
+            if (timeTillTicketUpdate <= 0)
+            {
+                foreach(ConquestPoint point in currentLevel.points)
+                {
+                    if (point.DoesTeamControlPoint(0))
+                    {
+                        teams[1].score -= ticketPointControlCost;
+                    }
+                    else if (point.DoesTeamControlPoint(1))
+                    {
+                        teams[0].score -= ticketPointControlCost;
+                    }
+                }
+
+                UpdateTicketDisplays();
+
+                timeTillTicketUpdate = ticketUpdateFrequency;
+            }
+
+            timeTillTicketUpdate -= Time.deltaTime;
+        }
 
         public void DelayedInit()
         {
@@ -87,10 +123,14 @@ namespace Gamemodes.Conquest
             //Afterwards, set the time period
             SetActiveTimePeriod(timePeriodOptions[0]);
 
+            ResetConquest();
+
             GM.CurrentSceneSettings.SosigKillEvent += OnSosigKill;
             GM.CurrentSceneSettings.PlayerDeathEvent += OnPlayerDeath;
             GM.CurrentPlayerBody.SetHealthThreshold(playerHealth);
+            GM.CurrentSceneSettings.IsSpawnLockingEnabled = false;
         }
+
 
         public void SetPlayerHealth(int value)
         {
@@ -129,23 +169,41 @@ namespace Gamemodes.Conquest
 
         public void SetActiveTimePeriod(TimePeriodOption timePeriod)
         {
-            ResetConquest();
+            timePeriod.InitializeLoadouts();
             currentTimePeriod = timePeriod;
             teams.Clear();
             teams.AddRange(timePeriod.Teams);
             SetPlayerLoadout(timePeriod.Loadouts[0]);
+            UpdateTicketDisplays();
         }
 
 
         public void ResetConquest()
         {
-            Debug.Log("Resetting KOTH");
+            Debug.Log("Resetting Conquest");
+            ResetTeams();
+            UpdateTicketDisplays();
+            currentLevel.ResetLevel();
+        }
 
+        public void UpdateTicketDisplays()
+        {
+            foreach (TicketDisplay ticketDisplay in ticketDisplays)
+            {
+                ticketDisplay.SetTeamColors(teams[0].teamColor, teams[1].teamColor);
+                ticketDisplay.SetTicketValues(teams[0].score, teams[1].score);
+            }
+        }
+
+        public void ResetTeams()
+        {
             foreach (Team team in teams)
             {
                 team.KillAllSosigs();
+                team.score = startingTickets;
             }
         }
+
 
         public void SetActiveLevel(ConquestLevel level)
         {
@@ -156,8 +214,6 @@ namespace Gamemodes.Conquest
             level.gameObject.SetActive(true);
 
             currentLevel = level;
-
-            ResetConquest();
         }
 
         public void SetPlayerLoadout(PlayerLoadout loadout)
@@ -197,11 +253,11 @@ namespace Gamemodes.Conquest
 
         public void MovePlayerSpawnpoint()
         {
-            SpawnArea newSpawn = GetRandomSpawnPoint(0);
-
-            if (newSpawn != null)
+            List<ConquestPoint> validPoints = currentLevel.points.Where(point => point.DoesTeamControlPoint(0)).ToList();
+            
+            if (validPoints.Count > 0)
             {
-                playerSpawn.position = newSpawn.GetPositionInArea();
+                playerSpawn.position = validPoints.GetRandom().SpawnAreas.GetRandom().GetPositionInArea();
             }
             else
             {
@@ -223,16 +279,41 @@ namespace Gamemodes.Conquest
         }
 
 
-        private void SpawnSosig(int team)
+        private bool SpawnSosig(int team)
         {
+            List<ConquestPoint> validPoints = currentLevel.points
+                .Where(point => point.DoesTeamControlPoint(team) && point.SpawnAreas.Any(spawn => spawn.CanSosigSpawn(team)))
+                .ToList();
+            if (validPoints.Count <= 0)
+            {
+                Debug.Log("No Where to spawn!");
+                return false;
+            }
             
-        }
+            ConquestPoint selectedPoint = validPoints.GetRandom();
 
-        public SpawnArea GetRandomSpawnPoint(int team)
-        {
-            return null;
-        }
+            SosigAPI.SpawnOptions spawnOptions = new SosigAPI.SpawnOptions
+            {
+                SpawnState = Sosig.SosigOrder.Assault,
+                SpawnActivated = true,
+                EquipmentMode = SosigAPI.SpawnOptions.EquipmentSlots.All,
+                SpawnWithFullAmmo = true,
+                IFF = team,
+                SosigTargetPosition = selectedPoint.GetNeighboringPointToAttack().AttackPoints.GetRandom().position
+            };
 
+            SosigEnemyTemplate template = teams[team].builtSosigTemplates.GetRandom();
+            Sosig sosig = selectedPoint.SpawnAreas.GetRandom().SpawnSosig(template, spawnOptions);
+
+            ConquestSosig cSosig = sosig.Links[0].gameObject.AddComponent<ConquestSosig>();
+            cSosig.sosig = sosig;
+            cSosig.team = teams[team];
+
+            cSosig.EquipSlothingItem(cSosig.team.teamClothingPrefab, 2);
+
+            teams[team].sosigs.Add(cSosig);
+            return true;
+        }
     }
 }
 

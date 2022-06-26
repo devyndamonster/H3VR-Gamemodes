@@ -137,7 +137,12 @@ namespace Gamemodes.Conquest
 
 			foreach (ConquestLevel level in ConquestManager.instance.levels)
 			{
-				levelButtons.AddButton(level.name, () => { ConquestManager.instance.SetActiveLevel(level); }, true);
+				levelButtons.AddButton(level.name, () => 
+				{ 
+					ConquestManager.instance.SetActiveLevel(level);
+					ConquestManager.instance.ResetConquest();
+				}, 
+				true);
 			}
 
 			levelButtons.buttons[0].SetSelected();
@@ -153,9 +158,10 @@ namespace Gamemodes.Conquest
 					timePeriod.TimePeriodName,
 					() =>
 					{
-						timePeriod.InitializeLoadouts();
+						ConquestManager.instance.ResetTeams();
 						ConquestManager.instance.SetActiveTimePeriod(timePeriod);
 						InitLoadoutButtons();
+						ConquestManager.instance.ResetConquest();
 					},
 					true);
 			}

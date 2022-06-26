@@ -329,7 +329,7 @@ namespace KOTH
             {
                 foreach (SpawnArea area in teamSpawns.spawnPoints)
                 {
-                    area.SetTeam(team, KOTHManager.instance.teams[team].teamColor);
+                    area.SetTeam(KOTHManager.instance.teams[team], team);
                 }
             }
         }
@@ -341,7 +341,7 @@ namespace KOTH
             {
                 foreach (SpawnArea area in teamSpawnPoints[team].spawnPoints)
                 {
-                    area.SetTeam(team, KOTHManager.instance.teams[team].teamColor);
+                    area.SetTeam(KOTHManager.instance.teams[team], team);
                 }
             }
         }

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afed54a239594b8abd631a8047a54987, type: 3}
+  m_Name: ProfileCombined
+  m_EditorClassIdentifier: 
+  PackageName: SampleGamemodes
+  Author: Devyndamonster
+  Version: 1.0.0
+  Icon: {fileID: 2800000, guid: 8123fb7703919e04883255f021e4f452, type: 3}
+  ReadMe: {fileID: 102900000, guid: 0ef972042aeb3144a87158168db7cdbc, type: 3}
+  WebsiteURL: 
+  Description: 
+  AdditionalDependencies: []
+  StripNamespaces: 1
+  AdditionalNamespaces:
+  - KOTH
+  - Gamemodes
+  - Gamemodes.Conquest
+  BuildItems:
+  - {fileID: 11400000, guid: 5f19aabe1ada7ca4fb0e484abe5a1bf3, type: 2}
+  BundleCompressionType: 2
+  BuildAction: 1
+  OutputProfile: C:/Users/Owner/AppData/Roaming/r2modmanPlus-local/H3VR/profiles/Otherloader
+    Test

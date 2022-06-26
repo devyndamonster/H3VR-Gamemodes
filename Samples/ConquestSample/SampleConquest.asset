@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9ca90819b143909ef3b06721bb54cc, type: 3}
+  m_Name: SampleConquest
+  m_EditorClassIdentifier: 
+  SceneFile: {fileID: 102900000, guid: 49ed8efa959a3fe4f9363cf05adae7eb, type: 3}
+  SceneName: Sample Conquest
+  GameMode: sandbox
+  DisplayMode: sandbox
+  Thumbnail: {fileID: 2800000, guid: a8ac1732ebd7c5344a73de2d381d9c4d, type: 3}
+  Author: Devyndamonster
+  Description: Enjoy a sample Conquest level!

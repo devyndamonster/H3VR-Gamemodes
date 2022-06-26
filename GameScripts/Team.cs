@@ -25,6 +25,9 @@ namespace Gamemodes
         [HideInInspector]
         public List<SosigEnemyTemplate> builtSosigTemplates;
 
+        [HideInInspector]
+        public int score;
+
         void Awake()
         {
             builtSosigTemplates = sosigTemplates.Select(o => o.GetSosigEnemyTemplate()).ToList();
@@ -36,6 +39,11 @@ namespace Gamemodes
             {
                 sosig.sosig.KillSosig();
             }
+        }
+
+        public bool HasRoomForMoreMembers()
+        {
+            return sosigs.Count < maxSosigs;
         }
 
     }

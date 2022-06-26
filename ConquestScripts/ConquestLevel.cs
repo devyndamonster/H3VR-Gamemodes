@@ -15,5 +15,13 @@ namespace Gamemodes.Conquest
 
         public Transform PlayerSpectatePoint;
 
+        public void ResetLevel()
+        {
+            foreach(ConquestPoint point in points)
+            {
+                point.ResetPoint(ConquestManager.instance.teams, ConquestManager.instance.captureUpdateFrequency);
+            }
+        }
+
     }
 }

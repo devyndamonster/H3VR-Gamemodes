@@ -16,10 +16,10 @@ namespace Gamemodes
 		protected virtual void Awake()
         {
 			DecreaseButton.onClick = new Button.ButtonClickedEvent();
-			DecreaseButton.onClick.AddListener(OnIncreasePressed);
+			DecreaseButton.onClick.AddListener(OnDecreasePressed);
 
 			IncreaseButton.onClick = new Button.ButtonClickedEvent();
-			IncreaseButton.onClick.AddListener(OnDecreasePressed);
+			IncreaseButton.onClick.AddListener(OnIncreasePressed);
 		}
 
 		public virtual void OnIncreasePressed()

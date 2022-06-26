@@ -36,14 +36,14 @@ namespace Gamemodes
         }
 
 
-        public void SetTeam(int team, Color teamColor)
+        public void SetTeam(Team team, int teamIndex)
         {
-            spawnColor = teamColor;
-            IFF = team;
+            spawnColor = team.teamColor;
+            IFF = teamIndex;
 
             if (!isPlayerInSpawn || IFF == 0)
             {
-                areaMesh.material.SetColor("_ScrollColor", teamColor);
+                areaMesh.material.SetColor("_ScrollColor", spawnColor);
             }
             else
             {

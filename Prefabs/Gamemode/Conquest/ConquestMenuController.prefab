@@ -1129,7 +1129,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114431633207970432}
         m_MethodName: SetGameMenu
         m_Mode: 1
         m_Arguments:

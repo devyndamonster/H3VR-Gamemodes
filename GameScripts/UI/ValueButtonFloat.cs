@@ -35,7 +35,8 @@ namespace Gamemodes
         protected override void Awake()
         {
             base.Awake();
-            Value = DefaultValue;
+            _value = DefaultValue;
+            ValueText.text = _value.ToString();
         }
 
         public bool WithinRange(float value)
